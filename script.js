@@ -120,46 +120,7 @@ window.addEventListener('scroll', () => {
     });
 });
 
-// ==================== CONTACT FORM ====================
-<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-    // ==================== EMAILJS INIT ====================
-    // Replace with your EmailJS public key
-emailjs.init("Zvvstsy4runVDiXW-");
 
-    // ==================== CONTACT FORM ====================
-const contactForm = document.getElementById('contactForm');
-
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault(); // Prevent default page reload/scroll
-
-        const submitBtn = contactForm.querySelector('.submit-btn');
-        const originalText = submitBtn.innerHTML;
-
-        submitBtn.innerHTML = '<span class="btn-text">[ SENDING... ]</span>';
-        submitBtn.disabled = true;
-
-        emailjs.sendForm('service_z30vl2b', 'template_9b2yhik', this)
-            .then(() => {
-                submitBtn.innerHTML = '<span class="btn-text green">[ MESSAGE_SENT ✓ ]</span>';
-                setTimeout(() => {
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
-                    contactForm.reset();
-                }, 2000);
-            })
-            .catch((error) => {
-                console.error('EmailJS error:', error);
-                submitBtn.innerHTML = '<span class="btn-text red">[ FAILED ❌ ]</span>';
-                setTimeout(() => {
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
-                }, 2000);
-            });
-
-        return false; // Extra safety to stop page jumping
-    });
-}
 // ==================== FADE IN ANIMATION ====================
 const observeFade = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
