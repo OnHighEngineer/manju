@@ -5,6 +5,9 @@
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Manju</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏍️</text></svg>">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link
     href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap"
@@ -74,6 +77,68 @@
       color: #ef4444 !important;
       border-color: #ef4444;
     }
+
+    /* Skills Weather Cards */
+    .skill-weather-card {
+      background: linear-gradient(135deg, rgba(30, 30, 30, 0.9) 0%, rgba(20, 20, 20, 0.95) 100%);
+      border: 1px solid rgba(96, 62, 57, 0.15);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.4s ease, border-color 0.4s ease;
+    }
+    .skill-weather-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 0, 0, 0.3);
+    }
+    .skill-weather-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #FF0000, transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .skill-weather-card:hover::before {
+      opacity: 1;
+    }
+
+    .skill-gauge-track {
+      background: rgba(60, 60, 60, 0.4);
+      height: 3px;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .skill-gauge-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: #FF0000;
+      transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      width: 0%;
+    }
+    .skill-gauge-fill.animated {
+      /* width set by data attribute */
+    }
+
+    .skill-tag {
+      background: rgba(53, 53, 53, 0.5);
+      border: 1px solid rgba(96, 62, 57, 0.1);
+      transition: all 0.3s ease;
+    }
+    .skill-tag:hover {
+      background: rgba(255, 0, 0, 0.15);
+      border-color: rgba(255, 0, 0, 0.3);
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 4px rgba(255, 0, 0, 0.2); }
+      50% { box-shadow: 0 0 12px rgba(255, 0, 0, 0.4); }
+    }
+    .status-dot {
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
   </style>
 </head>
 
@@ -92,11 +157,9 @@
         <a class="nav-link font-['Space_Grotesk'] tracking-tighter uppercase text-xs text-zinc-500 hover:text-zinc-100"
           href="#contact">Contact</a>
       </div>
-      <button class="p-2 hover:bg-zinc-900/50 transition-all duration-300 active:scale-95 text-zinc-100" style="">
-        <span class="material-symbols-outlined" style="">terminal</span>
-      </button>
     </div>
   </nav>
+
   <main class="pt-16 dot-grid min-h-screen">
     <!-- Hero Section -->
     <section class="max-w-7xl mx-auto px-6 py-12 md:py-24 flex flex-col gap-8" id="home">
@@ -156,10 +219,21 @@
                   generalization.</span>
               </li>
             </ul>
+            <div class="flex flex-wrap gap-2 mt-6">
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Python</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Machine Learning</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Data Cleaning</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Feature Engineering</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Model Evaluation</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">AI</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Deep Learning</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Data Analysis</span>
+            </div>
           </div>
         </div>
       </div>
     </section>
+
     <!-- Projects Section -->
     <section class="max-w-7xl mx-auto px-6 py-12 border-t border-outline-variant/10" id="projects">
       <div class="flex justify-between items-end mb-8">
@@ -195,10 +269,14 @@
               right LLM, balancing cost, speed, and quality. Uses dual-backend intent classifier (Embedding+NN / TF-IDF)
               to route to Fast Model (Llama 3.1 8B) or Capable Model (Gemini 1.5 Flash).</p>
             <div class="flex flex-wrap gap-2 mb-4">
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200" style="">FastAPI</span>
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200" style="">LLM Routing</span>
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200" style="">Gemini</span>
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200" style="">Llama 3.1</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Python</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Machine Learning</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">LLMs</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">AI Integration</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">FastAPI</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">GitHub</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Gemini</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Llama 3.1</span>
             </div>
             <div class="flex items-center gap-4">
               <span class="font-label text-[10px] uppercase text-primary" style="">Intelligent Routing</span>
@@ -236,9 +314,14 @@
             <p class="max-w-xl mb-4 text-sm text-zinc-200" style="">OCR and VLM-based entity extraction. Built FastAPI
               pipeline to convert scanned documents into structured JSON outputs.</p>
             <div class="flex flex-wrap gap-2 mb-4">
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200" style="">FastAPI</span>
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200" style="">OCR</span>
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200" style="">VLM</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Python</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">VLMs</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">LLMs</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">OCR</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">AI</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">MongoDB</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Backend</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">RAG</span>
             </div>
             <div class="flex items-center gap-4">
               <span class="font-label text-[10px] uppercase text-primary" style="">Production Ready</span>
@@ -274,6 +357,15 @@
             <p class="max-w-xl mb-6 text-zinc-200" style="">AI-based bone marrow cancer detection using CNN + Vision
               Transformer hybrid architecture. Improved generalization by 25% through advanced training and evaluation
               techniques.</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Python</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Machine Learning</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Model Development</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Data Cleaning</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">FastAPI</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">MongoDB</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">PyTorch</span>
+            </div>
             <div class="flex items-center gap-4">
               <span class="font-label text-[10px] uppercase text-primary" style="">Grad-CAM++ Explainability</span>
               <div class="h-px flex-1 bg-outline-variant/20"></div>
@@ -311,9 +403,14 @@
               URLs to detect misinformation using Gemini AI, and generates structured research papers with AI-driven
               content drafting.</p>
             <div class="flex flex-wrap gap-2 mb-4">
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200" style="">Next.js 15</span>
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200" style="">Gemini AI</span>
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200" style="">Genkit</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Python</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">LLMs</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">PyTorch</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">FastAPI</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Next.js 15</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Gemini AI</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Genkit</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">RAG</span>
             </div>
             <div class="flex items-center gap-4">
               <span class="font-label text-[10px] uppercase text-primary" style="">Live on Vercel</span>
@@ -352,10 +449,15 @@
               tool. Built with Selenium WebDriver and Java, covering UI regression, functional flows, and cross-browser
               validation with automated screenshots.</p>
             <div class="flex flex-wrap gap-2 mb-4">
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200" style="">Selenium</span>
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200" style="">Java</span>
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200" style="">Maven</span>
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200" style="">ChromeDriver</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Selenium</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Java</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Maven</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">ChromeDriver</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Test Automation</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">CI/CD</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">E2E Testing</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Regression</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">API Testing</span>
             </div>
             <div class="flex items-center gap-4">
               <span class="font-label text-[10px] uppercase text-primary" style="">E2E Testing</span>
@@ -394,11 +496,14 @@
               refurbished smartphones and laptops. Features glassmorphism UI, admin dashboard with inventory management,
               sales tracking, and WhatsApp integration.</p>
             <div class="flex flex-wrap gap-2 mb-4">
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200" style="">React.js</span>
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200" style="">Node.js</span>
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200" style="">MongoDB</span>
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200" style="">Tailwind CSS</span>
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200" style="">Express.js</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">React.js</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Node.js</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">MongoDB</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Tailwind CSS</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Express.js</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">JavaScript</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">REST APIs</span>
+              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Full-Stack</span>
             </div>
             <div class="flex items-center gap-4">
               <span class="font-label text-[10px] uppercase text-primary" style="">Full-Stack Platform</span>
@@ -491,6 +596,20 @@
     }, { rootMargin: '-40% 0px -55% 0px' });
 
     sections.forEach(section => observer.observe(section));
+
+    // Skill gauge animation on scroll
+    const gauges = document.querySelectorAll('.skill-gauge-fill');
+    const gaugeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const width = entry.target.getAttribute('data-width');
+          entry.target.style.width = width + '%';
+          entry.target.classList.add('animated');
+          gaugeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    gauges.forEach(gauge => gaugeObserver.observe(gauge));
   </script>
 
 </body>
