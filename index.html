@@ -306,7 +306,7 @@
               <ul class="md:col-span-2 space-y-4 text-zinc-100 arintra-panel text-justify" id="panel-clinical">
                 <li class="flex gap-3">
                   <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
-                  <span>Built a <strong class="text-zinc-100">clinical semantic-search platform</strong> combining dense embeddings (PubMedBERT) and BM25 sparse retrieval with <strong class="text-zinc-100">Reciprocal Rank Fusion</strong>, reranked by a cross-encoder, empirically tuning the dense/keyword contribution.</span>
+                  <span>Built a <strong class="text-zinc-100">clinical semantic-search platform</strong> combining dense embeddings (PubMedBERT) and BM25 sparse retrieval with <strong class="text-zinc-100">Reciprocal Rank Fusion</strong>, followed by cross-encoder reranking; empirically tuned the dense/keyword contribution.</span>
                 </li>
                 <li class="flex gap-3">
                   <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
@@ -318,15 +318,15 @@
                 </li>
                 <li class="flex gap-3">
                   <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
-                  <span>Implemented a <strong class="text-zinc-100">self-updating agent memory system</strong>: user feedback triggers an LLM classification pass (add/update/delete/no-op) and updates persistent memory used by future agent runs.</span>
+                  <span>Implemented a <strong class="text-zinc-100">self-updating agent memory system</strong> where user feedback triggers an LLM classification pass (add/update/delete/no-op) and updates persistent memory used by future agent runs.</span>
                 </li>
                 <li class="flex gap-3">
                   <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
-                  <span><strong class="text-zinc-100">Reduced retrieval latency</strong> by tuning the retrieval and reranking pipeline, balancing candidate-pool size and search quality against cross-encoder compute cost.</span>
+                  <span><strong class="text-zinc-100">Reduced retrieval latency by ~40%</strong> (P50: ~3s → ~1.8s) through retrieval/reranking optimization and candidate-pool tuning, balancing search quality against cross-encoder compute cost.</span>
                 </li>
                 <li class="flex gap-3">
                   <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
-                  <span><span class="text-primary text-[10px] uppercase tracking-widest font-bold">[Debug]</span> Root-caused a reranking quality bug where every chunk scored identically (0.0001 vs 0.99) due to reranking on <em>shared</em> instead of per-chunk text, caught via direct data inspection, not guesswork.</span>
+                  <span><span class="text-primary text-[10px] uppercase tracking-widest font-bold">[Debug]</span> Root-caused a reranking bug where every chunk received the same score due to reranking on <em>shared</em> rather than per-chunk text, identifying the issue through direct data inspection.</span>
                 </li>
               </ul>
 
@@ -342,11 +342,19 @@
                 </li>
                 <li class="flex gap-3">
                   <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
-                  <span>Diagnosed and fixed <strong class="text-zinc-100">data-quality bugs at the vector-database layer</strong>: case/separator-inconsistent categorical fields silently excluding ~0.15% of records from filtered search, found via direct payload inspection against real ingested data.</span>
+                  <span>Optimized <strong class="text-zinc-100">BigQuery workloads</strong> for cost and performance through table partitioning and query-efficient access patterns, reducing unnecessary data scanned and improving query execution time on production workloads.</span>
                 </li>
                 <li class="flex gap-3">
                   <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
-                  <span>Built <strong class="text-zinc-100">Metabase dashboards</strong> and extended the internal semantic layer from 28 → 77 logical data models, resolving schema mismatches between documented and live production tables.</span>
+                  <span>Built <strong class="text-zinc-100">BigQuery + Metabase analytics</strong> used by internal teams and <strong class="text-zinc-100">20+ live clients</strong>, covering operational SLA, revenue (ARR/MRR), incoming/outgoing volume, and cost-analysis dashboards.</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
+                  <span>Extended the internal semantic layer from <strong class="text-zinc-100">28 → 77 logical data models / 217 measures</strong>, resolving schema mismatches between documented and live production tables.</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
+                  <span>Diagnosed and fixed <strong class="text-zinc-100">data-quality bugs at the vector-database layer</strong>: case/separator inconsistencies silently excluding ~0.15% of records from filtered search, found via direct payload inspection.</span>
                 </li>
                 <li class="flex gap-3">
                   <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
@@ -358,23 +366,23 @@
               <ul class="md:col-span-2 space-y-4 text-zinc-100 arintra-panel hidden text-justify" id="panel-agentinfra">
                 <li class="flex gap-3">
                   <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
-                  <span>Built a <strong class="text-zinc-100">Model Context Protocol (MCP) server</strong> exposing a production search API as 9 typed, schema-validated tools for LLM agents, replacing a "curl instructions" document with tool calls that fail as validation errors instead of live 400s.</span>
+                  <span>Built a <strong class="text-zinc-100">Model Context Protocol (MCP) server</strong> exposing a production search API as 9 typed, schema-validated tools for LLM agents, designed around Kubernetes RBAC with typed validation and controlled write capabilities.</span>
                 </li>
                 <li class="flex gap-3">
                   <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
-                  <span>Designed the tool surface's <strong class="text-zinc-100">security model around existing Kubernetes RBAC</strong>: access requires no API key, gated entirely by whether the caller can open a kubectl port-forward tunnel.</span>
+                  <span>Built an <strong class="text-zinc-100">end-to-end natural-language-to-SQL agent</strong> with tiered intent classification (regex + Claude Haiku fallback), a semantic layer spanning 77 data models / 217 measures, and causal reasoning over query results.</span>
                 </li>
                 <li class="flex gap-3">
                   <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
-                  <span>Added a write-capable tool under an explicit <strong class="text-zinc-100">"read-only except one deliberate exception"</strong> policy, with hardcoded row caps on unauthenticated endpoints to prevent resource exhaustion from ungoverned agent callers.</span>
+                  <span>Improved production query accuracy from <strong class="text-zinc-100">~70% to 93%+</strong> through context engineering, structured query generation, persistent agent memory, and LLM/token optimization.</span>
                 </li>
                 <li class="flex gap-3">
                   <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
-                  <span>Built an <strong class="text-zinc-100">end-to-end natural-language-to-SQL agent</strong>: tiered intent classification (regex + Claude Haiku fallback) and a two-tier classification cache (SHA256-keyed, TTL-aware) hot-reloaded into the semantic layer.</span>
+                  <span>Reduced LLM calls by <strong class="text-zinc-100">~70%</strong> for unambiguous queries using deterministic classification with Claude Haiku fallback and a two-tier SHA256-keyed, TTL-aware classification cache, while maintaining structured-output behavior.</span>
                 </li>
                 <li class="flex gap-3">
                   <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
-                  <span><span class="text-primary text-[10px] uppercase tracking-widest font-bold">[Debug]</span> Validated error-handling logic against a real captured RBAC-denied kubectl failure, catching a case-sensitivity bug in the first attempt before it shipped, prioritizing verification over assumption.</span>
+                  <span><span class="text-primary text-[10px] uppercase tracking-widest font-bold">[Debug]</span> Validated error-handling against a real RBAC-denied kubectl failure, catching a case-sensitivity bug before deployment, prioritizing verification over assumption.</span>
                 </li>
               </ul>
 
