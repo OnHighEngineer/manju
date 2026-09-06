@@ -55,6 +55,37 @@
       background: rgba(53, 53, 53, 0.4);
       backdrop-filter: blur(20px);
     }
+
+    /* Curved Work Card with subtle hover highlight (no moving border line) */
+    .beam-card {
+      position: relative;
+      border-radius: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #131313;
+      overflow: hidden;
+      transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .beam-card:hover {
+      background-color: #1a1a1a;
+      border-color: rgba(255, 255, 255, 0.16);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    }
+
+    .beam-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+    }
+
+    /* Justified text alignment for work bullet content */
+    .beam-card ul li > span:last-child {
+      text-align: justify;
+      text-justify: inter-word;
+    }
+
+
   </style>
   <style>
     .project-overlay {
@@ -163,83 +194,267 @@
   <main class="pt-16 dot-grid min-h-screen">
     <!-- Hero Section -->
     <section class="max-w-7xl mx-auto px-6 py-12 md:py-24 flex flex-col gap-8" id="home">
-      <div
-        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant/20 w-fit">
-        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-        <span class="font-label text-[10px] tracking-widest uppercase text-on-surface-variant" style="">System Active:
-          Bengaluru, India</span>
-      </div>
-      <h1 class="font-headline text-5xl md:text-8xl font-bold tracking-tighter leading-[0.9] max-w-5xl" style="">
-        𝒽𝒾, 𝐼 𝒶𝓂 𝑀𝒶𝓃𝒿𝓊𝓃𝒶𝓉𝒽</h1>
-      <div class="font-body text-xl md:text-2xl text-on-surface-variant/80 max-w-3xl leading-relaxed">
-        <p class="" style="">I enjoy building AI/ML systems and agents end-to-end, with a focus on reliability,
-          evaluation, and QA-driven validation. I work across model development, APIs, and testing to ensure intelligent
-          systems behave consistently in real-world scenarios.</p>
-        <p class="mt-4" style="">Outside of building, I explore AI research, experiment with models, and refine my
-          understanding of ML systems.</p>
-      </div>
-      <div class="flex flex-wrap gap-4 mt-2">
-        <a class="bg-primary text-on-primary px-8 py-4 font-label uppercase text-sm font-bold tracking-widest hover:opacity-90 transition-all active:scale-95"
-          href="#work" style="">View Archive</a>
-        <a class="border border-outline-variant/30 px-8 py-4 font-label uppercase text-sm font-bold tracking-widest hover:bg-surface-container-low transition-all active:scale-95"
-          href="#contact" style="">Contact Operator</a>
+      <!-- top row: text + radar (vertically centered) -->
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-8 lg:gap-12">
+        <!-- left: text content -->
+        <div class="flex flex-col gap-8 flex-1">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant/20 w-fit">
+            <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+            <span class="font-label text-[10px] tracking-widest uppercase text-on-surface-variant">System Active: Bengaluru, India</span>
+          </div>
+          <h1 class="font-headline text-5xl md:text-8xl font-bold tracking-tighter leading-[0.9] max-w-5xl">
+            𝒽𝒾, 𝐼 𝒶𝓂 𝑀𝒶𝓃𝒿𝓊𝓃𝒶𝓉𝒽</h1>
+          <div class="font-body text-xl md:text-2xl text-on-surface-variant/80 max-w-3xl leading-relaxed">
+            <p>I enjoy building AI/ML systems and agents end-to-end, with a focus on reliability,
+              evaluation, and QA-driven validation. I work across model development, APIs, and testing to ensure intelligent
+              systems behave consistently in real-world scenarios.</p>
+            <p class="mt-4">Outside of building, I explore AI research, experiment with models, and deepen my understanding of ML systems.</p>
+          </div>
+          <div class="flex flex-wrap gap-4">
+            <a class="bg-primary text-on-primary px-8 py-4 font-label uppercase text-sm font-bold tracking-widest hover:opacity-90 transition-all active:scale-95" href="#work">View Archive</a>
+            <a class="border border-outline-variant/30 px-8 py-4 font-label uppercase text-sm font-bold tracking-widest hover:bg-surface-container-low transition-all active:scale-95" href="#contact">Contact Operator</a>
+          </div>
+        </div>
+        <!-- right: radar chart (vertically centered on right side) -->
+        <div class="hidden md:flex flex-shrink-0 self-center my-auto items-center justify-center">
+          <div class="relative w-[360px] h-[360px] select-none">
+            <svg id="radar-svg" viewBox="0 0 360 360" width="360" height="360" class="w-full h-full" style="overflow:visible;">
+              <defs>
+                <radialGradient id="radarFill" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" style="stop-color:#FF0000;stop-opacity:0.28"/>
+                  <stop offset="100%" style="stop-color:#FF0000;stop-opacity:0.04"/>
+                </radialGradient>
+                <filter id="radarGlow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur stdDeviation="3" result="blur"/>
+                  <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+              </defs>
+              <polygon id="grid-3" points="" fill="none" stroke="rgba(96,62,57,0.22)" stroke-width="1"/>
+              <polygon id="grid-2" points="" fill="none" stroke="rgba(96,62,57,0.22)" stroke-width="1"/>
+              <polygon id="grid-1" points="" fill="none" stroke="rgba(96,62,57,0.22)" stroke-width="1"/>
+              <g id="radar-axes" stroke="rgba(96,62,57,0.32)" stroke-width="1"></g>
+              <polygon id="radar-data" points="" fill="url(#radarFill)" stroke="#FF0000" stroke-width="1.5" stroke-linejoin="round" filter="url(#radarGlow)" style="transition:all 1.4s cubic-bezier(0.25,0.46,0.45,0.94);opacity:0;"/>
+              <g id="radar-dots"></g>
+            </svg>
+
+            <!-- 5 Symmetrical Radar Labels aligned with vertices -->
+            <!-- Top: AI / LLM (Vertex 0 at 180, 60) -->
+            <div class="absolute -translate-x-1/2 text-center w-[160px] pointer-events-none" style="left: 180px; top: 12px;">
+              <div class="font-['Space_Grotesk'] text-[11px] font-bold text-zinc-300 tracking-wider uppercase">AI / LLM</div>
+              <div class="font-['Inter'] text-[9px] text-zinc-500 whitespace-nowrap mt-0.5">Agents · MCP · Tool-use</div>
+            </div>
+
+            <!-- Upper Left: CLOUD / INFRA (Vertex 4 at 80, 133) -->
+            <div class="absolute -translate-x-1/2 text-center w-[140px] pointer-events-none" style="left: 70px; top: 90px;">
+              <div class="font-['Space_Grotesk'] text-[11px] font-bold text-zinc-300 tracking-wider uppercase">CLOUD / INFRA</div>
+              <div class="font-['Inter'] text-[9px] text-zinc-500 whitespace-nowrap mt-0.5">K8s · Docker · RBAC</div>
+            </div>
+
+            <!-- Upper Right: RAG / SEARCH (Vertex 1 at 280, 133) -->
+            <div class="absolute -translate-x-1/2 text-center w-[140px] pointer-events-none" style="left: 290px; top: 90px;">
+              <div class="font-['Space_Grotesk'] text-[11px] font-bold text-zinc-300 tracking-wider uppercase">RAG / SEARCH</div>
+              <div class="font-['Inter'] text-[9px] text-zinc-500 whitespace-nowrap mt-0.5">RRF · Reranking · Qdrant</div>
+            </div>
+
+            <!-- Bottom Left: BACKEND / SDE (Vertex 3 at 118, 250) -->
+            <div class="absolute -translate-x-1/2 text-center w-[140px] pointer-events-none" style="left: 118px; top: 264px;">
+              <div class="font-['Space_Grotesk'] text-[11px] font-bold text-zinc-300 tracking-wider uppercase">BACKEND / SDE</div>
+              <div class="font-['Inter'] text-[9px] text-zinc-500 whitespace-nowrap mt-0.5">FastAPI · Async · DBs</div>
+            </div>
+
+            <!-- Bottom Right: DATA ENGINEERING (Vertex 2 at 242, 250) -->
+            <div class="absolute -translate-x-1/2 text-center w-[140px] pointer-events-none" style="left: 242px; top: 264px;">
+              <div class="font-['Space_Grotesk'] text-[11px] font-bold text-zinc-300 tracking-wider uppercase">DATA ENGINEERING</div>
+              <div class="font-['Inter'] text-[9px] text-zinc-500 whitespace-nowrap mt-0.5">BigQuery · Temporal · ETL</div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
     <!-- Work Section -->
     <section class="max-w-7xl mx-auto px-6 py-12 border-t border-outline-variant/10" id="work">
-      <h2 class="font-headline text-xs uppercase tracking-[0.3em] text-primary font-bold mb-8" style="">02 //
-        Professional_Log</h2>
-      <div class="space-y-1">
-        <div class="group relative py-8 px-8 bg-surface-container-low hover:bg-surface-container transition-all">
-          <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
-            <div>
-              <span class="font-label text-xs text-primary mb-2 block uppercase tracking-widest" style="">Aug 2025 — Oct
-                2025</span>
-              <h3 class="font-headline text-3xl font-bold tracking-tight" style="">Machine Learning Trainee</h3>
-              <p class="font-medium text-zinc-100" style="">Amazon ML Summer School</p>
+      <h2 class="font-headline text-xs uppercase tracking-[0.3em] text-primary font-bold mb-8" style="">Professional Log</h2>
+      <div class="space-y-8 md:space-y-10">
+
+        <!-- Arintra Internship -->
+        <div class="beam-card">
+          <div class="beam-card-inner py-8 px-8 group relative transition-all">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+              <div>
+                <span class="font-label text-xs text-primary mb-2 block uppercase tracking-widest">Apr 2026 - Present</span>
+                <h3 class="font-headline text-3xl font-bold tracking-tight">Software Development Engineer Intern - AI &amp; Data</h3>
+                <p class="font-medium text-zinc-100 mt-1">Arintra</p>
+                <p class="text-xs text-zinc-400 mt-0.5">Enterprise-grade AI for healthcare revenue assurance</p>
+              </div>
+              <div class="flex flex-col items-end gap-2">
+                <div class="material-symbols-outlined group-hover:text-primary transition-colors text-4xl text-zinc-100">neurology</div>
+                <span class="px-3 py-1 bg-primary/10 border border-primary/30 text-primary text-[10px] font-bold uppercase tracking-widest rounded-full">Full-time Intern</span>
+              </div>
             </div>
-            <div class="material-symbols-outlined group-hover:text-primary transition-colors text-4xl text-zinc-100"
-              style="">trending_up</div>
+
+            <!-- Tab switcher -->
+            <div class="flex gap-1 mb-6 border-b border-zinc-800/60" id="arintra-tabs">
+              <button onclick="switchTab('clinical')" id="tab-clinical" class="arintra-tab active-tab px-4 py-2 text-[10px] uppercase tracking-widest font-bold font-['Space_Grotesk'] text-primary border-b-2 border-primary -mb-px transition-all">Search &amp; Clinical AI</button>
+              <button onclick="switchTab('healthcare')" id="tab-healthcare" class="arintra-tab px-4 py-2 text-[10px] uppercase tracking-widest font-bold font-['Space_Grotesk'] text-zinc-500 border-b-2 border-transparent -mb-px hover:text-zinc-200 transition-all">Healthcare Data &amp; Infra</button>
+              <button onclick="switchTab('agentinfra')" id="tab-agentinfra" class="arintra-tab px-4 py-2 text-[10px] uppercase tracking-widest font-bold font-['Space_Grotesk'] text-zinc-500 border-b-2 border-transparent -mb-px hover:text-zinc-200 transition-all">Agent Infrastructure</button>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+              <!-- Tab: Search & Clinical AI -->
+              <ul class="md:col-span-2 space-y-4 text-zinc-100 arintra-panel text-justify" id="panel-clinical">
+                <li class="flex gap-3">
+                  <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
+                  <span>Built a <strong class="text-zinc-100">clinical semantic-search platform</strong> combining dense embeddings (PubMedBERT) and BM25 sparse retrieval with <strong class="text-zinc-100">Reciprocal Rank Fusion</strong>, reranked by a cross-encoder, empirically tuning the dense/keyword contribution.</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
+                  <span>Built <strong class="text-zinc-100">retrieval workflows over CPT reference material</strong> to identify relevant procedure codes and corresponding descriptions from clinical queries.</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
+                  <span>Designed an <strong class="text-zinc-100">LLM-powered query-generation agent</strong> that performs web-search-grounded research before generating structured query packs, alongside a separate interactive refinement agent with a tool-use loop.</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
+                  <span>Implemented a <strong class="text-zinc-100">self-updating agent memory system</strong>: user feedback triggers an LLM classification pass (add/update/delete/no-op) and updates persistent memory used by future agent runs.</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
+                  <span><strong class="text-zinc-100">Reduced retrieval latency</strong> by tuning the retrieval and reranking pipeline, balancing candidate-pool size and search quality against cross-encoder compute cost.</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
+                  <span><span class="text-primary text-[10px] uppercase tracking-widest font-bold">[Debug]</span> Root-caused a reranking quality bug where every chunk scored identically (0.0001 vs 0.99) due to reranking on <em>shared</em> instead of per-chunk text, caught via direct data inspection, not guesswork.</span>
+                </li>
+              </ul>
+
+              <!-- Tab: Healthcare Data & Infra -->
+              <ul class="md:col-span-2 space-y-4 text-zinc-100 arintra-panel hidden text-justify" id="panel-healthcare">
+                <li class="flex gap-3">
+                  <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
+                  <span>Built a <strong class="text-zinc-100">Temporal-orchestrated ingestion pipeline</strong> (BigQuery → chunk → embed → upsert to Qdrant) with idempotent activities and keyset-pagination resumability for multi-million-row backfills.</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
+                  <span>Worked with <strong class="text-zinc-100">EHR-derived clinical data</strong>, using <strong class="text-zinc-100">FHIR and HL7 messages</strong> to retrieve and work with healthcare data within search and data workflows.</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
+                  <span>Diagnosed and fixed <strong class="text-zinc-100">data-quality bugs at the vector-database layer</strong>: case/separator-inconsistent categorical fields silently excluding ~0.15% of records from filtered search, found via direct payload inspection against real ingested data.</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
+                  <span>Built <strong class="text-zinc-100">Metabase dashboards</strong> and extended the internal semantic layer from 28 → 77 logical data models, resolving schema mismatches between documented and live production tables.</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
+                  <span><span class="text-primary text-[10px] uppercase tracking-widest font-bold">[Incident]</span> Resolved a production incident caused by two compounding root causes (DB connection lifecycle + CPU thread oversubscription) by isolating and A/B testing each independently.</span>
+                </li>
+              </ul>
+
+              <!-- Tab: Agent Infrastructure -->
+              <ul class="md:col-span-2 space-y-4 text-zinc-100 arintra-panel hidden text-justify" id="panel-agentinfra">
+                <li class="flex gap-3">
+                  <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
+                  <span>Built a <strong class="text-zinc-100">Model Context Protocol (MCP) server</strong> exposing a production search API as 9 typed, schema-validated tools for LLM agents, replacing a "curl instructions" document with tool calls that fail as validation errors instead of live 400s.</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
+                  <span>Designed the tool surface's <strong class="text-zinc-100">security model around existing Kubernetes RBAC</strong>: access requires no API key, gated entirely by whether the caller can open a kubectl port-forward tunnel.</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
+                  <span>Added a write-capable tool under an explicit <strong class="text-zinc-100">"read-only except one deliberate exception"</strong> policy, with hardcoded row caps on unauthenticated endpoints to prevent resource exhaustion from ungoverned agent callers.</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
+                  <span>Built an <strong class="text-zinc-100">end-to-end natural-language-to-SQL agent</strong>: tiered intent classification (regex + Claude Haiku fallback) and a two-tier classification cache (SHA256-keyed, TTL-aware) hot-reloaded into the semantic layer.</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
+                  <span><span class="text-primary text-[10px] uppercase tracking-widest font-bold">[Debug]</span> Validated error-handling logic against a real captured RBAC-denied kubectl failure, catching a case-sensitivity bug in the first attempt before it shipped, prioritizing verification over assumption.</span>
+                </li>
+              </ul>
+
+              <!-- Tags (always visible) -->
+              <div class="flex flex-col gap-4">
+                <div class="flex flex-wrap gap-2 mt-6">
+                  <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Python</span>
+                  <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Claude API</span>
+                  <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">RAG / Hybrid Search</span>
+                  <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Qdrant</span>
+                  <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">PubMedBERT</span>
+                  <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">CPT Codes</span>
+                  <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">FHIR / HL7</span>
+                  <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">EHR Data</span>
+                  <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">MCP</span>
+                  <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Temporal</span>
+                  <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">BigQuery</span>
+                  <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">FastAPI</span>
+                  <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Kubernetes / GKE</span>
+                  <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Docker</span>
+                  <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">PostgreSQL</span>
+                  <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">TypeScript / Next.js</span>
+                  <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">GitHub Actions</span>
+                  <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Metabase</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="grid md:grid-cols-3 gap-8">
-            <ul class="md:col-span-2 space-y-4 text-zinc-100">
-              <li class="flex gap-3" style="">
-                <span class="text-primary mt-1 font-bold" style="">_</span>
-                <span class="" style="">Built machine learning models on datasets with 10K+ samples using feature
-                  engineering and hyperparameter tuning.</span>
-              </li>
-              <li class="flex gap-3" style="">
-                <span class="text-primary mt-1 font-bold" style="">_</span>
-                <span class="" style="">Implemented evaluation pipelines using accuracy, precision, recall, and
-                  F1-score.</span>
-              </li>
-              <li class="flex gap-3" style="">
-                <span class="text-primary mt-1 font-bold" style="">_</span>
-                <span class="" style="">Focused on model validation, performance tracking, and improving
-                  generalization.</span>
-              </li>
-            </ul>
-            <div class="flex flex-wrap gap-2 mt-6">
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Python</span>
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Machine Learning</span>
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Data Cleaning</span>
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Feature Engineering</span>
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Model Evaluation</span>
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">AI</span>
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Deep Learning</span>
-              <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Data Analysis</span>
+        </div>
+
+        <!-- Amazon Entry -->
+        <div class="beam-card">
+          <div class="beam-card-inner py-8 px-8 group relative transition-all">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+              <div>
+                <span class="font-label text-xs text-primary mb-2 block uppercase tracking-widest" style="">Aug 2025 - Oct 2025</span>
+                <h3 class="font-headline text-3xl font-bold tracking-tight" style="">Machine Learning Trainee</h3>
+                <p class="font-medium text-zinc-100" style="">Amazon ML Summer School</p>
+              </div>
+              <div class="material-symbols-outlined group-hover:text-primary transition-colors text-4xl text-zinc-100" style="">trending_up</div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+              <ul class="md:col-span-2 space-y-4 text-zinc-100 text-justify">
+                <li class="flex gap-3" style="">
+                  <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
+                  <span class="" style="">Built machine learning models on datasets with 10K+ samples using feature
+                    engineering and hyperparameter tuning.</span>
+                </li>
+                <li class="flex gap-3" style="">
+                  <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
+                  <span class="" style="">Implemented evaluation pipelines using accuracy, precision, recall, and
+                    F1-score.</span>
+                </li>
+                <li class="flex gap-3" style="">
+                  <span class="text-primary font-bold shrink-0 select-none text-xs mt-1">-</span>
+                  <span class="" style="">Focused on model validation, performance tracking, and improving
+                    generalization.</span>
+                </li>
+              </ul>
+              <div class="flex flex-wrap gap-2 mt-6">
+                <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Python</span>
+                <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Machine Learning</span>
+                <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Data Cleaning</span>
+                <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Feature Engineering</span>
+                <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Model Evaluation</span>
+                <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">AI</span>
+                <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Deep Learning</span>
+                <span class="px-2 py-0.5 bg-zinc-800/80 text-[10px] uppercase text-zinc-200">Data Analysis</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
+
+    <!-- Projects Section -->
     <!-- Projects Section -->
     <section class="max-w-7xl mx-auto px-6 py-12 border-t border-outline-variant/10" id="projects">
       <div class="flex justify-between items-end mb-8">
         <div>
-          <h2 class="font-headline text-xs uppercase tracking-[0.3em] text-primary font-bold mb-4" style="">03 //
-            Project_Deployments</h2>
+          <h2 class="font-headline text-xs uppercase tracking-[0.3em] text-primary font-bold mb-4" style="">Project Deployments</h2>
           <p class="font-headline text-4xl font-bold tracking-tighter" style="">Technical Manifest</p>
         </div>
         <div class="font-label text-[10px] uppercase tracking-widest hidden md:block text-zinc-200" style="">
@@ -247,7 +462,7 @@
         </div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-        <!-- Project 1: AI Gateway — Large Feature -->
+        <!-- Project 1: AI Gateway - Large Feature -->
         <div
           class="md:col-span-8 group relative aspect-video md:aspect-auto md:min-h-[420px] overflow-hidden bg-zinc-900 border border-outline-variant/10">
           <div
@@ -263,7 +478,7 @@
                 style="">AI System</span>
               <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-200" style="">LLM Router</span>
             </div>
-            <h3 class="font-headline text-4xl font-bold mb-4 tracking-tighter" style="">AI Gateway — Smart LLM Router
+            <h3 class="font-headline text-4xl font-bold mb-4 tracking-tighter" style="">AI Gateway - Smart LLM Router
             </h3>
             <p class="max-w-xl mb-6 text-zinc-200" style="">A lightweight AI gateway that routes every prompt to the
               right LLM, balancing cost, speed, and quality. Uses dual-backend intent classifier (Embedding+NN / TF-IDF)
@@ -293,7 +508,7 @@
               href="https://github.com/OnHighEngineer/Ai_Gateway_LLm_Router_">View on GitHub</a>
           </div>
         </div>
-        <!-- Project 2: KramaAI — Featured Card -->
+        <!-- Project 2: KramaAI - Featured Card -->
         <div
           class="md:col-span-4 group relative aspect-square md:aspect-auto md:min-h-[420px] overflow-hidden bg-zinc-900 border border-outline-variant/10">
           <div
@@ -338,7 +553,7 @@
               href="https://github.com/OnHighEngineer/krama_labs">View on GitHub</a>
           </div>
         </div>
-        <!-- Project 3: Cytomind — Large Feature (UNCHANGED) -->
+        <!-- Project 3: Cytomind - Large Feature -->
         <div
           class="md:col-span-8 group relative aspect-video md:aspect-auto md:min-h-[420px] overflow-hidden bg-zinc-900 border border-outline-variant/10">
           <img alt="Microscopic cancer cell analysis visualization"
@@ -381,7 +596,7 @@
               href="https://github.com/OnHighEngineer/Major_Poject_Cytomind">View on GitHub</a>
           </div>
         </div>
-        <!-- Project 4: VeriScope — Featured Card -->
+        <!-- Project 4: VeriScope - Featured Card -->
         <div
           class="md:col-span-4 group relative aspect-square md:aspect-auto md:min-h-[420px] overflow-hidden bg-zinc-900 border border-outline-variant/10">
           <div
@@ -399,7 +614,7 @@
             </div>
             <h3 class="font-headline text-2xl font-bold mb-4 tracking-tighter" style="">AI-Powered Research Assistant
             </h3>
-            <p class="max-w-xl mb-4 text-sm text-zinc-200" style="">Full-stack research assistant — analyzes text and
+            <p class="max-w-xl mb-4 text-sm text-zinc-200" style="">Full-stack research assistant that analyzes text and
               URLs to detect misinformation using Gemini AI, and generates structured research papers with AI-driven
               content drafting.</p>
             <div class="flex flex-wrap gap-2 mb-4">
@@ -427,7 +642,7 @@
               href="https://github.com/OnHighEngineer/ResearchTool-using-LLM">View on GitHub</a>
           </div>
         </div>
-        <!-- Project 5: QA Automation — Featured Card -->
+        <!-- Project 5: QA Automation - Featured Card -->
         <div
           class="md:col-span-6 group relative aspect-video md:aspect-auto md:min-h-[420px] overflow-hidden bg-zinc-900 border border-outline-variant/10">
           <div
@@ -474,7 +689,7 @@
               href="https://github.com/OnHighEngineer/ResearchTesting">View on GitHub</a>
           </div>
         </div>
-        <!-- Project 6: SJ Technologies — Featured Card -->
+        <!-- Project 6: SJ Technologies - Featured Card -->
         <div
           class="md:col-span-6 group relative aspect-video md:aspect-auto md:min-h-[420px] overflow-hidden bg-zinc-900 border border-outline-variant/10">
           <div
@@ -490,7 +705,7 @@
                 style="">Freelance</span>
               <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-200" style="">E-Commerce</span>
             </div>
-            <h3 class="font-headline text-3xl font-bold mb-4 tracking-tighter" style="">SJ Technologies — Store Platform
+            <h3 class="font-headline text-3xl font-bold mb-4 tracking-tighter" style="">SJ Technologies - Store Platform
             </h3>
             <p class="max-w-xl mb-6 text-zinc-200" style="">A modern, full-stack e-commerce platform for selling
               refurbished smartphones and laptops. Features glassmorphism UI, admin dashboard with inventory management,
@@ -534,8 +749,7 @@
           <h2 class="font-headline text-5xl md:text-7xl font-bold text-on-primary tracking-tighter mb-8 italic"
             style="">Ready to collaborate?</h2>
           <p class="font-headline text-2xl text-on-primary font-medium mb-12" style=""><span
-              style="font-size: 1.5rem;">I take on applied AI systems, ML models, and agents with QA-driven evaluation.
-              Open to Applied AI and ML, SDET, QA roles          —feel free to reach out.</span></p>
+              style="font-size: 1.5rem;">I build AI and data systems across retrieval and LLM agents, with a focus on reliable, production-ready engineering. Open to SDE, Applied AI/ML, and AI Engineer roles. Feel free to reach out.</span></p>
           <a class="inline-flex items-center gap-4 font-headline text-3xl md:text-5xl font-bold text-on-primary border-b-4 border-on-primary pb-2 hover:gap-8 transition-all"
             href="mailto:manjuss0409@gmail.com" style="">
             manjuss0409@gmail.com
@@ -548,7 +762,7 @@
   <!-- Footer -->
   <footer class="w-full py-8 border-t border-zinc-900 bg-zinc-950">
     <div class="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto px-8 gap-4">
-      <div class="text-zinc-100 font-bold font-['Space_Grotesk'] tracking-tighter" style="">ARCHIVE.01 // MANJUNATH
+      <div class="text-zinc-100 font-bold font-['Space_Grotesk'] tracking-tighter" style="">ARCHIVE.01 · MANJUNATH
       </div>
       <div class="flex gap-8">
         <a class="font-['Space_Grotesk'] text-sm font-bold tracking-tighter uppercase text-zinc-600 hover:text-zinc-100 underline decoration-dotted transition-all opacity-80 hover:opacity-100"
@@ -566,7 +780,7 @@
     const navLinks = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('section[id]');
 
-    // Click handler — smooth scroll + set active
+    // Click handler: smooth scroll + set active
     navLinks.forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
@@ -579,7 +793,7 @@
       });
     });
 
-    // Scroll spy — highlight link based on visible section
+    // Scroll spy: highlight link based on visible section
     function setActive(activeLink) {
       navLinks.forEach(l => l.classList.remove('active'));
       activeLink.classList.add('active');
@@ -610,6 +824,101 @@
       });
     }, { threshold: 0.3 });
     gauges.forEach(gauge => gaugeObserver.observe(gauge));
+
+    // Arintra tab switcher
+    function switchTab(id) {
+      // Hide all panels
+      document.querySelectorAll('.arintra-panel').forEach(p => p.classList.add('hidden'));
+      // Show selected panel
+      const panel = document.getElementById('panel-' + id);
+      if (panel) panel.classList.remove('hidden');
+      // Update tab button styles
+      document.querySelectorAll('.arintra-tab').forEach(t => {
+        t.classList.remove('text-primary', 'border-primary');
+        t.classList.add('text-zinc-500', 'border-transparent');
+      });
+      const activeTab = document.getElementById('tab-' + id);
+      if (activeTab) {
+        activeTab.classList.remove('text-zinc-500', 'border-transparent');
+        activeTab.classList.add('text-primary', 'border-primary');
+      }
+    }
+
+    // Radar Chart
+    (function () {
+      // SVG viewBox is 360×360, centre at 180,165, max radius 105
+      const cx = 180, cy = 165, maxR = 105;
+      const skills = [
+        { label: 'AI / LLM',         value: 90 },
+        { label: 'RAG / Search',     value: 90 },
+        { label: 'Data Engineering', value: 80 },
+        { label: 'Backend / SDE',    value: 83 },
+        { label: 'Cloud / Infra',    value: 70 },
+      ];
+      const n = skills.length;
+
+      // angles: top → clockwise (72° each)
+      function angle(i) { return (Math.PI * 2 * i) / n - Math.PI / 2; }
+      function pt(r, i)  { return { x: cx + r * Math.cos(angle(i)), y: cy + r * Math.sin(angle(i)) }; }
+      function ptStr(r, i) { const p = pt(r, i); return `${p.x.toFixed(1)},${p.y.toFixed(1)}`; }
+      function polyStr(r)  { return skills.map((_, i) => ptStr(r, i)).join(' '); }
+
+      // Grid rings
+      [0.33, 0.66, 1].forEach((frac, idx) => {
+        const el = document.getElementById(`grid-${idx + 1}`);
+        if (el) el.setAttribute('points', polyStr(maxR * frac));
+      });
+
+      // Axis lines
+      const axesG = document.getElementById('radar-axes');
+      if (axesG) {
+        axesG.innerHTML = '';
+        skills.forEach((_, i) => {
+          const p = pt(maxR, i);
+          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', cx); line.setAttribute('y1', cy);
+          line.setAttribute('x2', p.x.toFixed(1)); line.setAttribute('y2', p.y.toFixed(1));
+          axesG.appendChild(line);
+        });
+      }
+
+      // Animate: polygon morphs from centre outward, dots pop in (no score numbers)
+      const dataEl = document.getElementById('radar-data');
+      const dotsG  = document.getElementById('radar-dots');
+
+      if (dataEl) dataEl.setAttribute('points', skills.map((_, i) => `${cx},${cy}`).join(' '));
+
+      function animateRadar() {
+        if (!dataEl) return;
+        const dataPoints = skills.map((s, i) => ptStr((s.value / 100) * maxR, i)).join(' ');
+        dataEl.setAttribute('points', dataPoints);
+        dataEl.style.opacity = '1';
+
+        // dots only (no numeric text)
+        if (dotsG) {
+          dotsG.innerHTML = '';
+          skills.forEach((s, i) => {
+            const p = pt((s.value / 100) * maxR, i);
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            circle.setAttribute('cx', p.x.toFixed(1));
+            circle.setAttribute('cy', p.y.toFixed(1));
+            circle.setAttribute('r', '3');
+            circle.setAttribute('fill', '#FF0000');
+            circle.setAttribute('opacity', '0');
+            circle.style.transition = `opacity 0.35s ease ${0.9 + i * 0.08}s`;
+            dotsG.appendChild(circle);
+            requestAnimationFrame(() => circle.setAttribute('opacity', '1'));
+          });
+        }
+      }
+
+      // Fire on load (radar is in the hero, always visible at page open)
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => setTimeout(animateRadar, 400));
+      } else {
+        setTimeout(animateRadar, 400);
+      }
+    })();
   </script>
 
 </body>
